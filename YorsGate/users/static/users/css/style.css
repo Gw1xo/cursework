@@ -1,0 +1,143 @@
+html {
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+html, body {
+	font-family: 'Arial';
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	color: #444;
+}
+
+.header{
+	background: rgba(20,1,0,30%);
+	width: 100%;
+	height: max-content;
+	display: flex;
+	justify-content: center;
+}
+
+.block:hover{
+	background: aliceblue;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.content {
+  	flex: 1 0 auto;
+	width: 100%;
+}
+.footer {
+	background: rgba(20,1,0,50%);
+  	flex: 0 0 auto;
+}
+
+.about{
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+	background:rgba(20,1,0,50%);
+	border-radius: 20% 20%;
+	height: 60%;
+	justify-content: center;
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.caption{
+    font-family: "JetBrains Mono ExtraBold";
+    text-align: center;
+    font-size: 48pt;
+	color: antiquewhite;
+}
+
+.lore{
+	font-family: "Book Antiqua";
+	text-align: center;
+	color: aliceblue;
+	font-size: 18pt;
+}
+
+p.butt_box ,p.link-mainpage {
+	text-align: center;
+}
+p.butt_box a {
+	padding: 10px;
+	min-width: 100px;
+	background: #333671;
+	color: #fff;
+	text-decoration: none;
+}
+
+p.butt_box a:hover{
+	background: #31324a;
+}
+
+p.link-mainpage a {
+	padding: 10px;
+	font-size: 25pt;
+	font-family: "JetBrains Mono ExtraBold";
+	min-width: 100px;
+	color: #31324a;
+	text-decoration: none;
+}
+
+.form{
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: bisque;
+	font-size: 14pt;
+	font-family: "Book Antiqua", serif;
+}
+
+form{
+	display: flex;
+	justify-content: center;
+}
+
+.input{
+	background: antiquewhite;
+	border-radius: 4px;
+}
+
+.form .submit{
+	background: antiquewhite;
+	font-family: "JetBrains Mono ExtraBold";
+	font-size: 14pt;
+	border-radius: 4px;
+	margin-top: 10px;
+
+}
+
+.register_ref{
+	text-align: right;
+}
+
+.form p {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+
+.form a {
+	font-family: "JetBrains Mono ExtraBold";
+	color: aqua;
+	text-decoration: none;
+}

@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+    <div class="caption">
+       Авторизація:
+    </div>
+    {%  if form.errors %}
+    {% endif %}
+    <form name="authentication" method="post" action="{% url 'users:login' %}">
+    <div class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" name="auth" value="Увійти" class="submit">
+        <input type="hidden" name="next" value="{% url 'users:home' %}">
+        <p class="register_ref">Ще не зареєстровані? <a href="{% url 'users:register' %}">Зареєструватися</a></p>
+    </div>
+    </form>
+
+
+{% endblock content %}

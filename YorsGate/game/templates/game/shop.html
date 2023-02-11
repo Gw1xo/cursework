@@ -1,0 +1,60 @@
+{% extends 'game/base.html' %}
+
+{% block mainmenu %}
+    <div class="header">
+        <p class="link-mainpage"><a href="{% url 'users:home' %}"><b>YorsGate</b></a></p>
+        <ul class="menu-main">
+            <li><a href="{% url 'game:order_page' %}">Порт</a></li>
+            <li><a href="{% url 'game:warehouse' %}">Склад</a></li>
+            <li><a href="{% url 'game:shop' %}" class="current">Магазин</a></li>
+        </ul>
+        <div class="money">Золото:
+            <input type="number" readonly value="{{ player.money }}" class="money_num">
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="block">
+        <h1>Ваш маленький магазин</h1>
+        <p>Тут ви можете продавати товари</p>
+    </div>
+    <div class="block">
+    </div>
+    <script>
+    "use strict"
+
+        let wareData = [
+           {% for ware in player_wares %}
+                {
+                    'id': {{ ware.ware.id }},
+                    'name': '{{ ware.ware.product_name }}',
+                    'count': {{ ware.count }},
+                    'price': {{ ware.ware.price }}
+                },
+            {% endfor %}
+        ]
+
+        window.onclick = event =>{
+
+        }
+
+        async function request(url, data, csrftoken){
+                const response = await fetch(url,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify(data),
+                });
+                return await response.text();
+            }
+
+        async function sendFunction(data){
+                const url = '{% url 'game:shop' %}';
+                const csrftoken = '{{ csrf_token }}'
+                const result = await request(url, data, csrftoken)
+            }
+    </script>
+{% endblock %}

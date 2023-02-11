@@ -1,0 +1,206 @@
+{% extends "game/base.html" %}
+
+{% load game_tags %}
+
+
+{% block mainmenu %}
+    <div class="header">
+        <p class="link-mainpage"><a href="{% url 'users:home' %}"><b>YorsGate</b></a></p>
+        <ul class="menu-main">
+            <li><a href="{% url 'game:order_page' %}" class="current">Порт</a></li>
+            <li><a href="{% url 'game:warehouse' %}">Склад</a></li>
+            <li><a href="{% url 'game:shop' %}">Магазин</a></li>
+        </ul>
+        <div class="money" >Золото:
+            <input type="number" readonly value="{{ player.money }}" class="money_num" id="money_num">
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="block" id="about">
+        <h1>Порт гордого міста Йорс</h1>
+        <p>Сюди припливають найкращі заморські товари, тут ви можете зробити замовлення товарів</p>
+    </div>
+    <div class="block" id="queque">
+        <h1>Дошка замовлень:</h1>
+        <table>
+        <tr><td><h3>Назва товару:</h3></td> <td><h3>Вага:</h3></td> <td><h3>Ціна:</h3></td> <td><h3>Додати:</h3></td><td><h3>Забрати:</h3></td><td><h3>Відмовитись</h3></td></tr>
+            {% for ware in wares %}
+                <tr>
+                <td>{{ ware.product_name }} </td> <td>{{ ware.product_volume }}</td> <td>{{ ware.price }} золотих</td>
+                <td><button class="button-buy plus" data-id="buy{{ ware.id }}">+</button></td>
+                <td><button class="button-buy minus" data-id="buy{{ ware.id }}">-</button></td>
+                <td><button class="button-buy cansel" data-id="buy{{ ware.id }}">Відмінити</button></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    <div class="block" id="order">
+        <div id="order_list">
+
+        </div>
+        <div class="accept">
+            <label for="order_volume">Загальна вага:</label><input id="order_volume" readonly type="number" class="money_num">
+            <label for="order_sum">Сума замовлення:</label><input id="order_sum" readonly type="number" class="money_num">
+            <button class="button-buy buy">Замовити</button><button class="button-buy clear">Очистити</button>
+        </div>
+        <div id="info_block">
+
+        </div>
+    </div>
+    <script>
+    "use strict"
+            let player_money = {{ player.money }};
+            let player_volume = {{ player.warehouse_capacity }};
+            let order_sum = 0;
+            let order_volume = 0;
+
+            let wareData = [
+                {% for ware in wares %}
+                    {
+                        'id': 'buy{{ ware.id }}',
+                        "name": '{{ ware.product_name }}',
+                        'price': {{ ware.price }},
+                        'volume': {{ ware.product_volume }},
+                        'count': 0,
+                        'ware': {{ ware.id }}
+                    },
+                {% endfor %}
+            ]
+
+            window.onload = function (){
+                viewElements(wareData);
+            }
+
+            window.onclick = event => {
+                if(event.target.classList.contains('plus')){
+                    plusFunction(event.target.dataset.id);
+                }
+                if(event.target.classList.contains('minus'))
+                {
+                    minusFunction(event.target.dataset.id);
+                }
+                if(event.target.classList.contains('cansel'))
+                {
+                    canselFunction(event.target.dataset.id);
+                }
+                if(event.target.classList.contains('clear')){
+                    clearFunction(wareData);
+                }
+                if(event.target.classList.contains('buy')){
+                    if(order_sum >= player_money){
+                        alertFunction(1);
+                    }else if(order_volume >= player_volume){
+                        alertFunction(2);
+                    }
+                    else{
+                        sendFunction();
+                        clearFunction(wareData);
+                        alertFunction(0);
+                        order_sum = 0;
+                        order_volume = 0;
+                        document.location.reload();
+                    }
+                }
+                viewElements(wareData);
+            }
+
+            let alertFunction = typeAlert =>{
+                let block = document.getElementById("info_block")
+                switch (typeAlert){
+                    case 0:
+                        block.innerHTML = '<p>Замовлення успішне</p>'
+                        break;
+                    case 1:
+                        block.innerHTML = '<p>!!!Недостатньо коштів!!!</p>'
+                         break;
+                    case 2:
+                        block.innerHTML = '<p>!!!Недостатньо місця на складі!!!</p>'
+                         break;
+                }
+            }
+
+            async function request(url, data, csrftoken){
+                const response = await fetch(url,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify(data),
+                });
+                return await response.text();
+            }
+
+            async function sendFunction(){
+                const url = '{% url 'game:warehouse' %}';
+                const data = wareData;
+                const csrftoken = '{{ csrf_token }}'
+                const result = await request(url, data, csrftoken)
+            }
+
+            let canselFunction = id =>{
+                wareData.forEach(element => {
+                    if (element['id'] === id){
+                        element['count'] = 0;
+                    }
+                })
+            }
+
+            let plusFunction = id =>{
+                wareData.forEach(element => {
+                    if (element['id'] === id){
+                        element['count']++;
+                    }
+                })
+            }
+
+            let minusFunction = id =>{
+                wareData.forEach(element => {
+                    if (element['id'] === id && element['count'] > 0){
+                        element['count']--;
+                    }
+                })
+            }
+
+            let clearFunction = () => {
+                wareData.forEach(element =>
+                {
+                    element.count = 0;
+                })
+            }
+
+            let viewElements = list => {
+                let str = '<h1>Список замовлених товарів</h1><table>' +
+                    '<td><h3>Назва:</h3></td> ' +
+                    '<td><h3>Об`єм:</h3></td> ' +
+                    '<td><h3>Ціна:</h3></td> ' +
+                    '<td><h3>Кількість:</h3></td>';
+
+                let volume = 0;
+                let sum = 0;
+                list.forEach(element => {
+                    if (element.count > 0){
+                        str += `<tr>
+                        <td>${element.name}</td>
+                        <td>${element.volume}</td>
+                        <td>${element.price}</td>
+                        <td>${element.count}</td>
+                        </tr>`;
+
+                        sum += element.price * element.count;
+                        volume += element.volume * element.count;
+                    }
+                })
+                str += '</table>';
+                document.getElementById('order_list').innerHTML = str;
+                document.getElementById('order_sum').value = sum;
+                document.getElementById('order_volume').value = volume;
+                order_sum = sum;
+                order_volume = volume;
+            }
+        </script>
+{% endblock %}

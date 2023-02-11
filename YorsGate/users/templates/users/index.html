@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+            <div class="caption">
+                YorsGate
+            </div>
+            <div class="lore">
+                Йорс старе портове місто де є купа героїв... Ви ж не герой... Ви той до кого герої приходять щоразу
+            </div>
+            <p class="butt_box">
+            {% if user.is_authenticated %}
+                <a href="{% url 'game:order_page' %}">Почати пригоду</a>
+                <p class="butt_box">
+                <a href="{% url 'users:logout' %}">Вийти</a>
+                </p>
+            {% else %}
+                <a href="{%  url 'users:login' %}">Увійти</a>
+            {% endif %}
+            </p>
+{% endblock content %}

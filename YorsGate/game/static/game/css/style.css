@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
+
+html {
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+html, body {
+    font-family: 'Arial';
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    color: #444;
+}
+
+.header{
+    background: rgba(20,1,0,70%);
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.content {
+    flex: 1 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.footer {
+    background: rgba(20,1,0,50%);
+    flex: 0 0 auto;
+}
+.block {
+    height: content-box;
+    width: 50%;
+    margin: 10px 25%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    background:rgba(20,1,0,50%);
+    justify-content: center;
+    text-align: center;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: bisque;
+}
+
+
+/* MENU */
+.menu-main {
+  list-style: none;
+  margin: 30px 0 20px;
+  text-align: center;
+}
+.menu-main li {display: inline-block;}
+.menu-main li:after {
+  content: "|";
+  color: #606060;
+  display: inline-block;
+  vertical-align:top;
+}
+.menu-main li:last-child:after {content: none;}
+.menu-main a {
+  text-decoration: none;
+  font-family: 'Ubuntu Condensed', sans-serif;
+  letter-spacing: 2px;
+  position: relative;
+  margin: 0 34px 0 30px;
+  font-size: 17px;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: color .2s;
+}
+.menu-main a, .menu-main a:visited {color: #9d999d;}
+.menu-main a.current, .menu-main a:hover{color: #feb386;}
+.menu-main a:before,
+.menu-main a:after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  top: auto;
+  right: 50%;
+  bottom: -5px;
+  left: 50%;
+  background: #feb386;
+  transition: .8s;
+}
+
+.menu-main a:hover:before, .menu-main .current:before {left: 0;}
+.menu-main a:hover:after, .menu-main .current:after {right: 0;}
+@media (max-width: 550px) {
+.menu-main {padding-top: 0;}
+.menu-main li {display: block;}
+.menu-main li:after {content: none;}
+.menu-main a {
+  padding: 25px 0 20px;
+  margin: 0 30px;
+}
+}
+
+.link-mainpage a{
+    text-decoration: none;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    letter-spacing: 2px;
+    position: relative;
+    margin: 0 34px 0 30px;
+    font-size: 30px;
+    transition: color .2s;
+}
+.link-mainpage a, .link-mainpage a:visited {color: #feb386;}
+.link-mainpage a:hover{color: darkorange;}
+.link-mainpage a:before,
+.link-mainpage a:after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  top: auto;
+  right: 50%;
+  bottom: -5px;
+  left: 50%;
+  background: #feb386;
+  transition: .8s;
+}
+
+.link-mainpage a:hover:before {left: 0;}
+.link-mainpage a:hover:after{right: 0;}
+@media (max-width: 550px) {
+.link-mainpage {padding-top: 0;}
+.link-mainpage a {
+  padding: 25px 0 20px;
+  margin: 0 30px;
+}
+}
+
+.money{
+    text-align: center;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: #feb386;
+    margin: 30px 40px 20px;
+    padding: 0;
+    font-size: 20px;
+}
+
+.money_num{
+    border-radius: 30%;
+    background: rgba(20,1,0,70%);
+    width: 75px;
+    text-align: center;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size: 20px;
+    color: #feb386;
+}
+
+.money_num:active, .money_num:hover, .money_num:focus {
+    cursor: default;
+    outline: 0;
+    outline-offset: 0;
+}
+
+.button-buy {
+    border-radius: 50%;
+    background: rgba(20,1,0,70%);
+    text-align: center;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size: 20px;
+    color: #feb386;
+}
+
+table{
+    width: 100%;
+}
+
+td{
+    background: rgba(20,1,0,62%);
+    margin: 6px;
+    border: 1px solid #feb386;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(40,5,12,70%) rgba(20,1,0,100%);
+}
+
+/*Chrome, Edge ,Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(20,1,0,100%);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(40,5,12,70%);
+    border-radius: 20px;
+}
+*::-webkit-scrollbar-track {
+    background: rgba(20,1,0,60%);
+    border-radius: 30%;
+}

@@ -1,0 +1,42 @@
+{% extends 'game/base.html' %}
+
+{% block mainmenu %}
+     <div class="header">
+        <p class="link-mainpage"><a href="{% url 'users:home' %}"><b>YorsGate</b></a></p>
+        <ul class="menu-main">
+            <li><a href="{% url 'game:order_page' %}" >Порт</a></li>
+            <li><a href="{% url 'game:warehouse' %}" class="current">Склад</a></li>
+            <li><a href="{% url 'game:shop' %}">Магазин</a></li>
+        </ul>
+        <div class="money" >Золото:
+            <input type="number" readonly value="{{ player.money }}" class="money_num">
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="block" >
+        <h1>Портовий склад</h1>
+        <p>Величезна будівля, простора, тут зберігаються ваші товари</p>
+    </div>
+    <div class="block" id="ware_list">
+    <h1>Список наявних товарів</h1>
+        <table>
+        <td><h3>Назва:</h3></td><td><h3>Об`єм:</h3></td><td><h3>Ціна:</h3></td><td><h3>Кількість:</h3></td>
+        {% for ware in wares %}
+            <tr>
+                        <td>{{ ware.ware.product_name }}</td>
+                        <td>{{ ware.ware.product_volume }}</td>
+                        <td>{{ ware.ware.price }}</td>
+                        <td>{{ ware.count }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <p>--------------{{ wares_volume }}/{{ capacity }}--------------</p>
+    </div>
+    <script>
+
+
+
+    </script>
+{% endblock %}
